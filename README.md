@@ -1,70 +1,73 @@
-# Getting Started with Create React App
+#NOTE
+project ini dibuat pada lingkupan sysetm OS LINUX,
+##CLONE PROJECT BY RESOURCE REPOSITORY
+##NPM INSTALL
+##NPM RUN DEV
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+#soal 1
+### Tabel: Pengajuan
 
-## Available Scripts
+| Kolom                | Tipe Data      | Deskripsi                                    | Nullable | Keterangan  |
+|----------------------|----------------|----------------------------------------------|----------|-------------|
+| nomorpenagjuan        | VARCHAR(255)   | Nomor pengajuan                              | Tidak    | Primary Key |
+| tanggalpengajuan      | DATE           | Tanggal pengajuan                            | Tidak    |             |
+| NOMORPENDAFTARAN      | VARCHAR(255)   | Nomor pendaftaran                            | Tidak    |             |
+| TANGGAL PENDAFTARAN   | DATE           | Tanggal pendaftaran                          | Tidak    |             |
+| KANTOR PABEAN         | VARCHAR(255)   | Kantor pabean tempat pengajuan dilakukan     | Tidak    |             |
+| SKEP FASILITAS        | VARCHAR(255)   | Surat Keputusan fasilitas                    | Tidak    |             |
+| JENIS PIB             | VARCHAR(255)   | Jenis PIB (Pemberitahuan Impor Barang)       | Tidak    |             |
+| KANTOR PABEAN         | VARCHAR(255)   | Kantor pabean yang mengurus PIB              | Tidak    |             |
+| JENIS IMPOR           | VARCHAR(255)   | Jenis impor (misalnya, impor barang, bahan)  | Tidak    |             |
+| CARA PEMBAYARAN       | VARCHAR(255)   | Cara pembayaran (misalnya, tunai, kredit)    | Tidak    |             |
+| TRANSAKSI             | VARCHAR(255)   | Jenis transaksi (misalnya, ekspor, impor)    | Tidak    |             |
 
-In the project directory, you can run:
+### Tabel: Data Entitas
 
-### `npm start`
+| Kolom                 | Tipe Data      | Deskripsi                                       | Nullable | Keterangan |
+|-----------------------|----------------|-------------------------------------------------|----------|------------|
+| JENIS PEMBERITAHUAN    | VARCHAR(255)   | Jenis pemberitahuan (misalnya, impor, ekspor)    | Tidak    |            |
+| NIB                   | VARCHAR(255)   | Nomor Induk Berusaha (NIB) perusahaan           | Tidak    |            |
+| NO IDENTITAS           | VARCHAR(255)   | Nomor identitas perusahaan                      | Tidak    |            |
+| NAMA PERUSAHAAN        | VARCHAR(255)   | Nama perusahaan                                 | Tidak    |            |
+| PROVINSI               | VARCHAR(255)   | Provinsi tempat perusahaan beroperasi           | Tidak    |            |
+| KABUPATEN              | VARCHAR(255)   | Kabupaten tempat perusahaan beroperasi          | Tidak    |            |
+| KECAMATAN              | VARCHAR(255)   | Kecamatan tempat perusahaan beroperasi          | Tidak    |            |
+| KODE POS               | VARCHAR(10)    | Kode pos alamat perusahaan                      | Tidak    |            |
+| RT RW                  | VARCHAR(10)    | RT/RW alamat perusahaan                         | Tidak    |            |
+| TELEPHONE              | VARCHAR(15)    | Nomor telepon perusahaan                        | Tidak    |            |
+| EMAIL                 | VARCHAR(255)   | Alamat email perusahaan                         | Tidak    |            |
+| STATUS                 | VARCHAR(50)    | Status perusahaan (aktif, non-aktif, dll)       | Tidak    |            |
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Tabel: Data Pungutan
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+| Kolom                    | Tipe Data      | Deskripsi                                       | Nullable | Keterangan |
+|--------------------------|----------------|-------------------------------------------------|----------|------------|
+| INCONTREM                | DECIMAL(12,2)  | Nilai pungutan dalam valuta tertentu            | Tidak    |            |
+| VALUTA                   | VARCHAR(50)    | Jenis valuta (IDR, USD, dll)                    | Tidak    |            |
+| KURS                     | DECIMAL(10,4)  | Kurs valuta pada saat transaksi                 | Tidak    |            |
+| NILAI                    | DECIMAL(12,2)  | Nilai barang yang dikenakan pungutan            | Tidak    |            |
+| BIAYA TAMBAHAN           | DECIMAL(12,2)  | Biaya tambahan lainnya                          | Tidak    |            |
+| BIAYA PENGURANGAN        | DECIMAL(12,2)  | Biaya yang dapat dikurangi dalam perhitungan    | Tidak    |            |
+| VOLUNTARY DECLARATION    | VARCHAR(255)   | Keterangan deklarasi sukarela (jika ada)        | Tidak    |            |
+| NILAI FOB                | DECIMAL(12,2)  | Nilai FOB (Free On Board)                       | Tidak    |            |
+| ASURANSI BAYARAN         | DECIMAL(12,2)  | Nilai pembayaran asuransi                       | Tidak    |            |
+| ASURANSI                 | DECIMAL(12,2)  | Nilai asuransi (untuk nilai barang)             | Tidak    |            |
+| CIF                      | DECIMAL(12,2)  | Cost, Insurance, and Freight                    | Tidak    |            |
+| CIFRP                    | DECIMAL(12,2)  | CIF plus biaya lainnya                          | Tidak    |            |
+| BRUTO NETTO              | DECIMAL(12,2)  | Berat bruto dan netto barang                    | Tidak    |            |
 
-### `npm test`
+### Relasi Antar Tabel
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. **Relasi antara Tabel Pengajuan dan Data Entitas**:
+   - **Kolom `nomorpenagjuan`** di tabel `Pengajuan` berhubungan dengan **`NIB`** di tabel `Data Entitas`. Relasi ini menunjukkan bahwa setiap pengajuan terkait dengan perusahaan yang memiliki NIB tertentu.
 
-### `npm run build`
+2. **Relasi antara Tabel Pengajuan dan Data Pungutan**:
+   - **Kolom `nomorpenagjuan`** di tabel `Pengajuan` berhubungan dengan **`INCONTREM`** di tabel `Data Pungutan`. Relasi ini menghubungkan setiap pengajuan dengan pungutan yang terkait, berdasarkan nomor pengajuan.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Penjelasan Relasi
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **Pengajuan ke Data Entitas**: Setiap pengajuan terkait dengan entitas (perusahaan) yang memiliki `NIB`, `NO IDENTITAS`, dan informasi lain yang terkait dengan entitas tersebut.
+- **Pengajuan ke Data Pungutan**: Setiap pengajuan dapat memiliki data terkait pungutan yang dikenakan pada transaksi tersebut, seperti nilai, biaya tambahan, dan nilai CIF.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+#soal 2
+maaf tidak sempat buat, karna masih nyambi
